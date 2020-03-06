@@ -1,0 +1,151 @@
+---
+title: "RNA-Seq"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Read our data for today
+
+```{r}
+counts <- read.csv("airway_scaledcounts.csv", stringsAsFactors = FALSE)
+metadata <-  read.csv("airway_metadata.csv", stringsAsFactors = FALSE)
+```
+
+```{r}
+head(counts)
+head(metadata)
+```
+
+How many genes?
+
+```{r}
+nrow(counts)
+```
+
+Compare control and treated groups in 'counts'.
+Isolate controls by column names. Metadata has the control vs treated and then you need to match it to
+the id in counts.
+
+```{r}
+# Access just the control metadata ids
+control <- metadata[metadata$dex == "control",]
+control
+```
+
+```{r}
+# Access the count columns with control$id
+counts[ , control$id]
+```
+
+```{r}
+# Find mean value for each gene i.e row
+control.mean <- rowSums(counts[ , control$id])/nrow(control)
+names(control.mean) <- counts$ensgene
+```
+
+```{r}
+# Access just the control metadata ids
+treated <- metadata[metadata$dex == "treated",]
+treated
+```
+
+```{r}
+# Access the count columns with control$id
+counts[ , treated$id]
+```
+
+```{r}
+# Find mean value for each gene i.e row
+treated.mean <- rowSums(counts[ , treated$id])/nrow(treated)
+```
+
+```{r}
+# Put it all together
+mycounts <- data.frame(control.mean, treated.mean)
+mycounts
+```
+
+```{r}
+```
+
+
+```{r}
+plot(mycounts, log = "xy")
+```
+
+```{r}
+# Let's remove our zero count genes because we can't say anything about this from this data set.
+#Find all the genes with a zero in its row.
+toremove <- unique(which(mycounts == "0", arr.ind = TRUE)[ ,"row"])
+newcounts <- mycounts[-toremove,]
+```
+
+```{r}
+# How many genes left after removing the genes with the zero values.
+nrow(newcounts)
+```
+
+```{r}
+newcounts$log2fc <- log2(newcounts[,"treated.mean"]/newcounts[,"control.mean"])
+head(newcounts)
+```
+
+```{r}
+# Find the upregulated genes, which is anything with a value greater than 2.
+upregulated <- (newcounts$log2fc > 2)
+sum(upregulated)
+```
+```{r}
+# Find the downregulated genes, which is anything with a value less than 2.
+downregulated <- (newcounts$log2fc < -2)
+sum(downregulated)
+```
+
+```{r}
+# Let's use DESeq2
+library(DESeq2)
+```
+
+```{r}
+# Setup the object required by DESeq
+library(DESeq2)
+dds <- DESeqDataSetFromMatrix(countData=counts, 
+                              colData=metadata, 
+                              design=~dex, 
+                              tidy=TRUE)
+dds <- DESeq(dds)
+```
+
+```{r}
+res <- results(dds)
+res
+```
+
+```{r}
+# Volcano plot of log2fc vs p-value
+plot(res$log2FoldChange, -log(res$padj), col = "gray")
+abline(v=c(-2, +2), lty=2)
+abline(h=-log(.05), lty=2)
+
+```
+
+```{r}
+# Setup our custom point color vector 
+mycols <- rep("gray", nrow(res))
+mycols[ abs(res$log2FoldChange) > 2 ]  <- "red" 
+
+inds <- (res$padj < 0.01) & (abs(res$log2FoldChange) > 2 )
+mycols[ inds ] <- "blue"
+
+# Volcano plot with custom colors 
+plot( res$log2FoldChange,  -log(res$padj), 
+ col=mycols, ylab="-Log(P-value)", xlab="Log2(FoldChange)" )
+
+# Cut-off lines
+abline(v=c(-2,2), col="gray", lty=2)
+abline(h=-log(0.1), col="gray", lty=2)
+```
+
