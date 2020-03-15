@@ -2,7 +2,7 @@
 #' title: ""
 #' author: "Jasmin Revanna"
 #' date: "Jan, 2020"
-output: github_document
+#' output: github_document
 
 # Class 5
 # Data visualization and graphics in R
