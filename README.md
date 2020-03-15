@@ -2,11 +2,18 @@
 
 This is my classwork from [BGGN213 winter quarter](https://github.com/jasminrevanna/bggn213/blob/master/README.md) at UC San Diego.
 
+-Class 05: [Data exploration and visualization in R](https://github.com/jasminrevanna/bggn213/blob/master/class5/class5.Rmd)
+
+-Class 06: [Why, when and how of writing your own R functions](https://github.com/jasminrevanna/bggn213/blob/master/Class06/Class06.Rmd)
+
+-Class 08: [Introduction to machine learning for Bioinformatics 1](https://github.com/jasminrevanna/bggn213/blob/master/Class08/Class08.Rmd)
+
 -Class 09: [Introduction to machine learning for Bioinformatics 1](https://github.com/jasminrevanna/bggn213/blob/master/Class09/Class09.Rmd)
 
--Class 11
+-Class 11:[Structural Bioinformatics (Part 1)]
+(https://github.com/jasminrevanna/bggn213/blob/master/Class11/Class11.Rmd)
 
--Class 12: [Structural bioinformatics](https://github.com/jasminrevanna/bggn213/blob/master/Class12/Structural%20Bioinformatics.Rmd)
+-Class 12: [Structural bioinformatics (Part 2)](https://github.com/jasminrevanna/bggn213/blob/master/Class12/Structural%20Bioinformatics.Rmd)
 
 -Class 13: [Structure basded drug design](https://github.com/jasminrevanna/bggn213/blob/master/class13/class13.Rmd)
 
