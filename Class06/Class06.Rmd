@@ -1,0 +1,174 @@
+---
+title: 'Class 6: R functions'
+author: "Jasmin Revanna"
+date: "1/24/2020"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## This is level 2 heading
+
+This is **regular** old *text*!
+
+and a list of stuff
+
+
+- toy
+- garage
+- shoe
+
+
+```{r}
+plot(1:5, col="light blue", type="o")
+```
+
+let's insert a code chunk with the shortcut `Option-CMD-i`:
+
+```{r}
+x <- c(1:10)
+x
+```
+
+Here is my analysis of your new data. It looks ok.. the mean of your data is `r mean(x)`.
+
+We will use the read.table function
+```{r}
+x <- read.csv("test1.txt")
+```
+
+```{r}
+y <- read.table("test2.txt", header = TRUE, sep = "$")
+```
+
+```{r}
+z <- read.table("test3.txt")
+```
+
+
+
+
+
+
+
+
+
+
+## Our first function
+
+This is an example function `add` withinputs a`x` and `y`
+
+```{r}
+add <- function(x, y=1) {
+ # Sum the input x and y
+ x + y
+}
+```
+
+Let's try to use it
+
+```{r}
+add(x=c(1, 4, 7), y=4)
+```
+
+
+```{r}
+rescale2 <- function(x) {
+ rng <-range(x, na.rm = TRUE)
+ (x - rng[1]) / (rng[2] - rng[1])
+}
+```
+
+
+```{r}
+rescale2(c(1:10, NA))
+```
+
+
+    
+```{r}
+rescale <- function(x, na.rm=TRUE, plot=FALSE) {
+ if(na.rm) {
+ rng <-range(x, na.rm=TRUE)
+ } else {
+ rng <-range(x)
+ }
+ print("Hello")
+ answer <- (x - rng[1]) / (rng[2] - rng[1])
+ return(answer)
+ print("is it me you are looking for?")
+ if(plot) {
+ plot(answer, typ="b", lwd=4)
+ }
+ print("I can see it in ...")
+}
+
+```
+
+```{r}
+##rescale3(x)
+```
+
+## Working with the bio3d package
+
+To use the function from any package we have installed, we use the `library()` function to load it.
+
+```{r}
+library(bio3d)
+```
+
+# Can you improve this analysis code?
+```{r}
+library(bio3d)
+s1 <- read.pdb("4AKE") # kinase with drug
+s2 <- read.pdb("1AKE") # kinase no drug
+s3 <- read.pdb("1E4Y") # kinase with drug
+
+s1.chainA <- trim.pdb(s1, chain="A", elety="CA")
+s2.chainA <- trim.pdb(s2, chain="A", elety="CA")
+s3.chainA <- trim.pdb(s3, chain="A", elety="CA")
+
+s1.b <- s1.chainA$atom$b
+s2.b <- s2.chainA$atom$b
+s3.b <- s3.chainA$atom$b
+
+plotb3(s1.b, sse=s1.chainA, typ="l", ylab="Bfactor")
+plotb3(s2.b, sse=s2.chainA, typ="l", ylab="Bfactor")
+plotb3(s3.b, sse=s3.chainA, typ="l", ylab="Bfactor")
+```
+
+
+
+```{r}
+hc <- hclust( dist( rbind(s1.b, s2.b, s3.b) ) )
+plot(hc)
+```
+
+
+```{r}
+s1 <- read.pdb("4AKE") 
+s1
+```
+
+
+
+```{r}
+class(s1)
+```
+
+```{r}
+str(s1)
+```
+
+```{r}
+s1$seqres
+```
+
+
+```{r}  
+plotb3(s1.b, sse=s1.chainA, typ="l", ylab="Bfactor") #putting all graphs into 1
+points(s2.b, col = "blue", typ = "l")
+points(s3.b, col = "red", typ = "l")
+```

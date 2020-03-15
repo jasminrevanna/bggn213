@@ -1,0 +1,66 @@
+---
+title: "Jasmin Revanna HW6"
+author: "Jasmin Revanna"
+date: "1/31/2020"
+output:
+  word_document: default
+  html_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(bio3d)
+s1 <- read.pdb("4AKE") # kinase with drug
+s2 <- read.pdb("1AKE") # kinase no drug
+s3 <- read.pdb("1E4Y") # kinase with drug
+
+s1.chainA <- trim.pdb(s1, chain="A", elety="CA")
+s2.chainA <- trim.pdb(s2, chain="A", elety="CA")
+s3.chainA <- trim.pdb(s3, chain="A", elety="CA")
+
+s1.b <- s1.chainA$atom$b
+s2.b <- s2.chainA$atom$b
+s3.b <- s3.chainA$atom$b
+
+plotb3(s1.b, sse=s1.chainA, typ="l", ylab="Bfactor")
+plotb3(s2.b, sse=s2.chainA, typ="l", ylab="Bfactor")
+plotb3(s3.b, sse=s3.chainA, typ="l", ylab="Bfactor")
+```
+
+## Q6. How would you generalize the original code above to work with any set of input protein structures?
+### I would isolate each function by breaking them down to the core (read pdb file -> trim residues from pdb ->
+### get chain and atom columns from file -> plot the data on one graph to see similarties -> 
+### plot which protein structures are the most similar
+
+
+```{r}
+
+compare <- function(x) {
+  #retrieve protein pdb file from the pdb database
+  readx <- read.pdb(x)
+  #trim the file to the parts we want
+  trimmedx <- trim.pdb(readx, chain="A", elety="CA")
+  #call on the column and rows we want to plot
+  atomx <- trimmedx$atom$b
+  #plot our graph as a line;  X is the atom column and Y is the B factor.
+  plotb3(atomx, sse=trimmedx, typ="l", ylab="Bfactor")
+  
+}
+```
+
+
+
+```{r}
+#create a vector of multiple PDB codes to run to gather all graphs together while only having to run the function once
+y <- ( c("4AKE", "1AKE", "1E4Y"))
+#the lapply function applies all parts of the list vector y to the function we created (compare) and runs the function
+lapply(y, compare)
+```
+
+
+
+
