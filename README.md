@@ -6,7 +6,7 @@ This is my classwork from [BGGN213 winter quarter](https://github.com/jasminreva
 
 -Class 06: [Why, when and how of writing your own R functions](https://github.com/jasminrevanna/bggn213/blob/master/Class06/Class06.Rmd)
 
--Class 08: [Introduction to machine learning for Bioinformatics 1](https://github.com/jasminrevanna/bggn213/blob/master/Class08/Class08.Rmd)
+-Class 08: [Introduction to machine learning for Bioinformatics 1](https://github.com/jasminrevanna/bggn213/blob/master/class08/class08.Rmd)
 
 -Class 09: [Introduction to machine learning for Bioinformatics 1](https://github.com/jasminrevanna/bggn213/blob/master/Class09/Class09.Rmd)
 
