@@ -10,7 +10,7 @@ This is my classwork from [BGGN213 winter quarter](https://github.com/jasminreva
 
 -Class 09: [Introduction to machine learning for Bioinformatics 1](https://github.com/jasminrevanna/bggn213/blob/master/Class09/Class09.Rmd)
 
--Class 11:[Structural Bioinformatics (Part 1)]
+-Class 11: [Structural Bioinformatics (Part 1)]
 (https://github.com/jasminrevanna/bggn213/blob/master/Class11/Class11.Rmd)
 
 -Class 12: [Structural bioinformatics (Part 2)](https://github.com/jasminrevanna/bggn213/blob/master/Class12/Structural%20Bioinformatics.Rmd)
