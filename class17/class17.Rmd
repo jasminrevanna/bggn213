@@ -24,6 +24,7 @@ Q1. How many total infected cases are there around the world?
 
 ```{r}
 total <- sum(virus$cases)
+total
 ```
 
 Q2. How many deaths linked to infected cases have there been?
